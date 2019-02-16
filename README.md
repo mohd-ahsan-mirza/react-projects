@@ -1,6 +1,6 @@
 # react-deploy-script-github-pages
 
-This script creates and deploys an intial react app for you on github provided you have the correct versions of npm, node and react installed on your machine. I have included the versions I was using when I built this script. 
+The bash script included creates and deploys an intial react app for you on github provided you have the correct versions of npm, node and react installed on your machine. I have included the versions I was using when I built this script. 
 
 You will also need git running on your commandline
 
