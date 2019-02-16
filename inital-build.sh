@@ -30,9 +30,9 @@ fi
 create-react-app $1
 cd $1
 npm install gh-pages --save-dev
-sed -i '5i\  "homepage": "http://'"$2"'.github.io/'"$1"'",' ./package.json
-sed -i '15i\    "predeploy": "npm run build",' ./package.json
-sed -i '16i\    "deploy": "gh-pages -d build",' ./package.json
+gsed -i '5i\  "homepage": "http://'"$2"'.github.io/'"$1"'",' ./package.json
+gsed -i '15i\    "predeploy": "npm run build",' ./package.json
+gsed -i '16i\    "deploy": "gh-pages -d build",' ./package.json
 git init
 git remote add origin https://$2:$3@github.com/$2/$1.git
 #In case the build failed for some reason previously
