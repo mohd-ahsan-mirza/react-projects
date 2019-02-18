@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import Tools from './components/Tools';
+import Routine from './components/Routine';
 import Skills from './components/Skills';
+import Education from './components/Education';
 
 class App extends Component {
 
@@ -13,8 +14,9 @@ class App extends Component {
 
   initializeComponents() {
   	this.components = [];
-		this.components['Tools'] = {title:"Back-End VS Front-End Development",renderID:<Tools />}
+		this.components['Routine'] = {title:"Typical day at work",renderID:<Routine />}
 		this.components['Skills'] = {title:"Technical Experience",renderID:<Skills />}
+		this.components['Education'] = {title:"Currently Learning",renderID:<Education />}
   }
 
   renderComponent(componentID) {
@@ -38,10 +40,11 @@ class App extends Component {
     return (
       	<div className="container">
 					{this.header}
-					{this.renderComponent('Tools')}
+					{this.renderComponent('Routine')}
 					{this.renderComponent('Skills')}
-					<footer class="page-footer font-small blue">
-  					<div class="footer-copyright text-center py-3">© 2018 Copyright:
+					{this.renderComponent('Education')}
+					<footer className="page-footer font-small blue">
+  					<div className="footer-copyright text-center py-3">© 2019 Copyright:
     					<a href="http://ahsanmirza.com"> Ahsan mirza</a>
   					</div>
 					</footer>

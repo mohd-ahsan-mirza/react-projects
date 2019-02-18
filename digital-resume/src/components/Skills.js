@@ -17,18 +17,24 @@ class Skills extends Resume{
 		this.addBaseColors('rgb(63, 191, 127, 0.5)');
 		this.addBaseColors('rgba(77, 59, 75, 0.5)');
 		this.addBaseColors('rgba(12, 38, 25, 0.5)');
+		this.addBaseColors('rgba(100, 78, 69, 0.5)');
+		this.addBaseColors('rgba(18, 15, 20, 0.5)');
+		this.addBaseColors('rgba(16, 20, 15, 0.5)');
 
-		this.addChartData({label:'PHP',value:3,color:this.random_rgba()});
-		this.addChartData({label:'SQL',value:3,color:this.random_rgba()});
-		this.addChartData({label:'MongoDB',value:2,color:this.random_rgba()});
-		this.addChartData({label:'Laravel',value:1,color:this.random_rgba()});
-		this.addChartData({label:'WordPress',value:2,color:this.random_rgba()});
-		this.addChartData({label:'Vanilla JS',value:3,color:this.random_rgba()});
-		this.addChartData({label:'jQuery',value:2,color:this.random_rgba()});
-		this.addChartData({label:'AngularJS',value:1.5,color:this.random_rgba()});
-		this.addChartData({label:'React',value:0.5,color:this.random_rgba()});
-		this.addChartData({label:'Bootstrap',value:0.5,color:this.random_rgba()});
-		this.addChartData({label:'AWS',value:0.25,color:this.random_rgba()});
+		this.addChartData({label:'PHP',data:3,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'SQL',data:3,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'MongoDB',data:2,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'Laravel',data:1,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'WordPress',data:2,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'Vanilla JS',data:3,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'jQuery',data:2,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'AngularJS',data:1.5,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'Vagrant',data:2,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'Docker',data:0.5,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'React',data:0.5,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'Bootstrap',data:0.5,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'AWS',data:0.25,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'Python',data:0.25,backgroundColor:this.random_rgba()});
 		
 		this.state = {
 			chartData:{

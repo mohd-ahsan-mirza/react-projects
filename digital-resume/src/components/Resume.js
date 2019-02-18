@@ -16,8 +16,8 @@ class Resume extends Component{
     addChartData(dataObject){
         this.integratedChartData.push(dataObject);
         this.labels.push(dataObject.label);
-        this.values.push(dataObject.value);
-        this.colors.push(dataObject.color);
+        this.values.push(dataObject.data);
+        this.colors.push(dataObject.backgroundColor);
     }
     getLabels(){
         return this.labels;
@@ -27,6 +27,21 @@ class Resume extends Component{
     }
     getColors(){
         return this.colors;
+    }
+    getIntegratedChartData(){
+        return this.integratedChartData;
+    }
+    popIntegratedChartData(){
+        return this.integratedChartData.pop();
+    }
+    popLabels(){
+        return this.labels.pop();
+    }
+    popValues(){
+        return this.values.pop();
+    }
+    popColors(){
+        return this.colors.pop();
     }
     shuffle(a) {
         var j, x, i;
