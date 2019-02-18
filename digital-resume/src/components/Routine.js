@@ -5,7 +5,7 @@ import {Pie} from 'react-chartjs-2';
 class Routine extends Resume{
 	constructor(props){
 		super(props);
-		this.addChartData({label:'Eat a bagle',data:5,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'Eat a bagel',data:5,backgroundColor:this.random_rgba()});
 		this.addChartData({label:'Error Analysis/Bug fixes',data:30,backgroundColor:this.random_rgba()});
 		this.addChartData({label:'Coding',data:30,backgroundColor:this.random_rgba()});
 		this.addChartData({label:'Sprint Planning/Meetings',data:10,backgroundColor:this.random_rgba()});
