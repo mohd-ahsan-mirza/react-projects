@@ -32,7 +32,7 @@ class Manipulator extends Component{
             for(var run=0;run<this.manipulatedlistArray.length;run++){
                 var value = '"'+this.manipulatedlistArray[run]+'"';
                 newList.push(value);
-                newListString = newListString+value;
+                newListString = newListString+value+"\r\n";
             }
             this.manipulatedlistArray = newList;
             this.setState({
@@ -49,7 +49,7 @@ class Manipulator extends Component{
             for(var run=0;run<this.manipulatedlistArray.length;run++){
                 var value = "'"+this.manipulatedlistArray[run]+"'";
                 newList.push(value);
-                newListString = newListString+value;
+                newListString = newListString+value+"\r\n";
             }
             this.manipulatedlistArray = newList;
             this.setState({
@@ -66,7 +66,7 @@ class Manipulator extends Component{
             for(var run=0;run<this.manipulatedlistArray.length;run++){
                 var value = this.manipulatedlistArray[run]+",";
                 newList.push(value);
-                newListString = newListString+value;
+                newListString = newListString+value+"\r\n";
             }
             var index=newListString.lastIndexOf(",");
             newListString=newListString.substring(0,index) 
