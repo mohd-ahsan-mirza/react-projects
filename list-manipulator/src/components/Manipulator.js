@@ -158,6 +158,9 @@ class Manipulator extends Component{
         }else{
             this.originalListArray = this.state.originalList.split("\n");
         }
+        this.originalListArray = this.originalListArray.filter(function (el) {
+            return el != "";
+        });
         this.manipulateList();
     }
 
