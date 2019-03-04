@@ -21,17 +21,11 @@ class App extends Component {
 
   renderComponent(componentID) {
   	return	<div className="row">
-    					<div className="col-lg-2 col-md-2 col-sm-12">
+					<div className="col-lg-12 col-md-12 col-sm-12 text-center mt-3 mb-3">
+						{this.components[componentID].title}
         			</div>
-							<div className="col-lg-12 col-md-12 col-sm-12 text-center mt-3 mb-3">
-								{this.components[componentID].title}
-        			</div>
-							<div className="col-lg-2 col-md-2 col-sm-12">
-        			</div>
-        			<div className="col-lg-8 col-md-8 col-sm-12 border-top border-bottom">
+        			<div className="col-lg-12 col-md-12 col-sm-12 border-top border-bottom">
         				{this.components[componentID].renderID}
-        			</div>
-        			<div className="col-lg-2 col-md-2 col-sm-12">
         			</div>
         		</div>
 	}

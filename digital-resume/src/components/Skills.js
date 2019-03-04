@@ -20,14 +20,19 @@ class Skills extends Resume{
 		this.addBaseColors('rgba(100, 78, 69, 0.5)');
 		this.addBaseColors('rgba(18, 15, 20, 0.5)');
 		this.addBaseColors('rgba(16, 20, 15, 0.5)');
+		this.addBaseColors('rgb(232, 140, 140, 0.5)');
+		this.addBaseColors('rgb(10, 131, 137, 0.5)');
+		this.addBaseColors('rgb(137, 13, 139, 0.5)');
 
 		this.addChartData({label:'PHP',data:3,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'WordPress',data:2,backgroundColor:this.random_rgba()});
 		this.addChartData({label:'SQL',data:3,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'jQuery',data:2,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'Vanilla JS',data:3,backgroundColor:this.random_rgba()});
 		this.addChartData({label:'MongoDB',data:2,backgroundColor:this.random_rgba()});
 		this.addChartData({label:'Laravel',data:1,backgroundColor:this.random_rgba()});
-		this.addChartData({label:'WordPress',data:2,backgroundColor:this.random_rgba()});
-		this.addChartData({label:'Vanilla JS',data:3,backgroundColor:this.random_rgba()});
-		this.addChartData({label:'jQuery',data:2,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'GIT',data:2,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'Linux',data:3,backgroundColor:this.random_rgba()});
 		this.addChartData({label:'AngularJS',data:1.5,backgroundColor:this.random_rgba()});
 		this.addChartData({label:'Vagrant',data:2,backgroundColor:this.random_rgba()});
 		this.addChartData({label:'Docker',data:0.5,backgroundColor:this.random_rgba()});
@@ -35,6 +40,7 @@ class Skills extends Resume{
 		this.addChartData({label:'Bootstrap',data:0.5,backgroundColor:this.random_rgba()});
 		this.addChartData({label:'AWS',data:0.25,backgroundColor:this.random_rgba()});
 		this.addChartData({label:'Python',data:0.25,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'Scripting',data:2,backgroundColor:this.random_rgba()});
 		
 		this.state = {
 			chartData:{
