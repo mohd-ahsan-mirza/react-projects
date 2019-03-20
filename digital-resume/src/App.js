@@ -34,7 +34,6 @@ class App extends Component {
     return (
       	<div className="container">
 					{this.header}
-					{this.renderComponent('Routine')}
 					{this.renderComponent('Skills')}
 					{this.renderComponent('Education')}
 					<footer className="page-footer font-small blue">
