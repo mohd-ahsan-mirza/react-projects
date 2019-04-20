@@ -34,7 +34,7 @@ class Skills extends Resume{
 		this.addChartData({label:'GIT',data:2,backgroundColor:this.random_rgba()});
 		this.addChartData({label:'Linux',data:3,backgroundColor:this.random_rgba()});
 		this.addChartData({label:'AngularJS',data:1.5,backgroundColor:this.random_rgba()});
-		this.addChartData({label:'Vagrant',data:2,backgroundColor:this.random_rgba()});
+		this.addChartData({label:'Redis',data:0.25,backgroundColor:this.random_rgba()});
 		this.addChartData({label:'Docker',data:0.5,backgroundColor:this.random_rgba()});
 		this.addChartData({label:'React',data:0.5,backgroundColor:this.random_rgba()});
 		this.addChartData({label:'Bootstrap',data:0.5,backgroundColor:this.random_rgba()});
