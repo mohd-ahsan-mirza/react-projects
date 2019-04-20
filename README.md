@@ -6,8 +6,8 @@ Collection of my react projects
 * npm => 3.10.10
 * react => 2.1.3
 
-#Setup
-For each react project
+# Setup
+For each react project cd into the project and run the following command
 ```
 npm install
 ```
