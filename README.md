@@ -5,6 +5,7 @@ Collection of my react projects
 * node => 10.15.0
 * npm => 3.10.10
 * react => 2.1.3
+* git =>  2.20.1
 
 # Setup
 For each react project cd into the project and run the following command
