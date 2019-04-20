@@ -4,7 +4,7 @@ Collection of my react projects
 * node => 10.15.0
 * npm => 3.10.10
 * react => 2.1.3
-#Projects
+# Projects
 ## Initial-build
 The bash script creates and deploys an intial react app for you on github
 You will also need git running on your commandline
