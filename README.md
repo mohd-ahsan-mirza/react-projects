@@ -21,5 +21,9 @@ After the app has been published, open your package manager and copy paste the u
 ## List Manipulator
 Normally I would have to write large SQL queries at work, and the IN clause normally would have multiple values in it.
 This tool allows me to format any list of IDs I would need in the IN clause by just click of two buttons.
-[URL](Use the demo button to see an example usage)
+
+Use the demo button to see an example usage
+
+[URL](https://mohd-ahsan-mirza.github.io/list-manipulator/ )
+
 [Source Code](https://github.com/mohd-ahsan-mirza/react-projects/tree/master/list-manipulator)
