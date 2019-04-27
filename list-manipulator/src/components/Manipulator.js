@@ -21,8 +21,20 @@ class Manipulator extends Component{
         this.options.push({id:"1", option:'"',selected:false,button:<button id='button1' key="1" type='button' className={this.notSelected} onClick={() => this.updateButtonProperties("1")}>""</button>});
         this.options.push({id:"2", option:"'",selected:false,button:<button id='button2' key="2" type='button' className={this.notSelected} onClick={() => this.updateButtonProperties("2")}>''</button>});
         this.options.push({id:"3", option:",",selected:false,button:<button id='button3' key="3" type='button' className={this.notSelected} onClick={() => this.updateButtonProperties("3")}>,</button>});
+        this.options.push({id:"4", option:"(",selected:false,button:<button id='button4' key="4" type='button' className={this.notSelected} onClick={() => this.updateButtonProperties("4")}>(</button>});
+        this.options.push({id:"5", option:")",selected:false,button:<button id='button5' key="5" type='button' className={this.notSelected} onClick={() => this.updateButtonProperties("5")}>)</button>});
+        this.options.push({id:"6", option:"),",selected:false,button:<button id='button6' key="6" type='button' className={this.notSelected} onClick={() => this.updateButtonProperties("6")}>),</button>});
         //Add option here
     }
+
+    setManipulatedList(newList,newListString){
+        this.manipulatedlistArray = newList;
+        this.setState({
+            manipulatedList : newListString,
+        });
+    }
+
+    //TODO: Add options for multiple values in one line
 
     addDoubleQuotesAroundListElements(){
         var newListString = "";
@@ -34,10 +46,7 @@ class Manipulator extends Component{
                 newList.push(value);
                 newListString = newListString+value+"\r\n";
             }
-            this.manipulatedlistArray = newList;
-            this.setState({
-                manipulatedList : newListString,
-            });
+            this.setManipulatedList(newList,newListString)
         }
     }
 
@@ -51,10 +60,7 @@ class Manipulator extends Component{
                 newList.push(value);
                 newListString = newListString+value+"\r\n";
             }
-            this.manipulatedlistArray = newList;
-            this.setState({
-                manipulatedList : newListString,
-            });
+            this.setManipulatedList(newList,newListString)
         }
     }
 
@@ -70,10 +76,49 @@ class Manipulator extends Component{
             }
             var index=newListString.lastIndexOf(",");
             newListString=newListString.substring(0,index) 
-            this.manipulatedlistArray = newList;
-            this.setState({
-                manipulatedList : newListString,
-            });
+            this.setManipulatedList(newList,newListString)
+        }
+    }
+
+    addOpenParenthesinListELements(){
+        var newListString = "";
+        var selectedOption = this.options.filter(selectedOption => selectedOption.id === "4" && selectedOption.selected === true);
+        var newList = [];
+        if(selectedOption.length!==0){
+            for(var run=0;run<this.manipulatedlistArray.length;run++){
+                var value = "("+this.manipulatedlistArray[run];
+                newList.push(value);
+                newListString = newListString+value+"\r\n";
+            }
+            this.setManipulatedList(newList,newListString)
+        }
+    }
+
+    addCloseParenthesinListELements(){
+        var newListString = "";
+        var selectedOption = this.options.filter(selectedOption => selectedOption.id === "5" && selectedOption.selected === true);
+        var newList = [];
+        if(selectedOption.length!==0){
+            for(var run=0;run<this.manipulatedlistArray.length;run++){
+                var value = this.manipulatedlistArray[run]+")";
+                newList.push(value);
+                newListString = newListString+value+"\r\n";
+            }
+            this.setManipulatedList(newList,newListString)
+        }
+    }
+
+    addCloseParenthesAndCommaInListELements(){
+        var newListString = "";
+        var selectedOption = this.options.filter(selectedOption => selectedOption.id === "6" && selectedOption.selected === true);
+        var newList = [];
+        if(selectedOption.length!==0){
+            for(var run=0;run<this.manipulatedlistArray.length;run++){
+                var value = this.manipulatedlistArray[run]+"),";
+                newList.push(value);
+                newListString = newListString+value+"\r\n";
+            }
+            this.setManipulatedList(newList,newListString)
         }
     }
 
@@ -84,6 +129,9 @@ class Manipulator extends Component{
         this.addDoubleQuotesAroundListElements();
         this.addSingleQuotesAroundListElements();
         this.addCommaBetweenListElements();
+        this.addOpenParenthesinListELements();
+        this.addCloseParenthesinListELements();
+        this.addCloseParenthesAndCommaInListELements()
         //Call option function
     }
 
