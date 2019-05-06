@@ -24,6 +24,7 @@ class Manipulator extends Component{
         this.options.push({id:"4", option:"(",selected:false,button:<button id='button4' key="4" type='button' className={this.notSelected} onClick={() => this.updateButtonProperties("4")}>(</button>});
         this.options.push({id:"5", option:")",selected:false,button:<button id='button5' key="5" type='button' className={this.notSelected} onClick={() => this.updateButtonProperties("5")}>)</button>});
         this.options.push({id:"6", option:"),",selected:false,button:<button id='button6' key="6" type='button' className={this.notSelected} onClick={() => this.updateButtonProperties("6")}>),</button>});
+        this.options.push({id:"7", option:"00000+",selected:false,button:<button id='button7' key="7" type='button' className={this.notSelected} onClick={() => this.updateButtonProperties("7")}>00000+</button>});
         //Add option here
     }
 
@@ -122,6 +123,20 @@ class Manipulator extends Component{
         }
     }
 
+    appendFiveZerostoListElements(){
+        var newListString = "";
+        var selectedOption = this.options.filter(selectedOption => selectedOption.id === "7" && selectedOption.selected === true);
+        var newList = [];
+        if(selectedOption.length!==0){
+            for(var run=0;run<this.manipulatedlistArray.length;run++){
+                var value = "00000"+this.manipulatedlistArray[run];
+                newList.push(value);
+                newListString = newListString+value+"\r\n";
+            }
+            this.setManipulatedList(newList,newListString)
+        }
+    }
+
     //Add option function
 
     manipulateList(){
@@ -131,7 +146,8 @@ class Manipulator extends Component{
         this.addCommaBetweenListElements();
         this.addOpenParenthesinListELements();
         this.addCloseParenthesinListELements();
-        this.addCloseParenthesAndCommaInListELements()
+        this.addCloseParenthesAndCommaInListELements();
+        this.appendFiveZerostoListElements();
         //Call option function
     }
 
