@@ -141,13 +141,13 @@ class Manipulator extends Component{
 
     manipulateList(){
         this.manipulatedlistArray = this.originalListArray;
+        this.appendFiveZerostoListElements();
         this.addDoubleQuotesAroundListElements();
         this.addSingleQuotesAroundListElements();
         this.addCommaBetweenListElements();
         this.addOpenParenthesinListELements();
         this.addCloseParenthesinListELements();
         this.addCloseParenthesAndCommaInListELements();
-        this.appendFiveZerostoListElements();
         //Call option function
     }
 
