@@ -26,6 +26,7 @@ if [[ $checkRepo ==  *"Repository not found"* ]];
 else
     echo "Repo exist on github";
 fi
+cd ..
 #React app will have the same name as repo for simplicity
 create-react-app $1
 cd $1
@@ -38,4 +39,6 @@ git remote add origin https://$2:$3@github.com/$2/$1.git
 #In case the build failed for some reason previously
 rm -rf node_modules/gh-pages/.cache
 npm run deploy
+cd ..
+mv $1 react-projects/$1
 exit
