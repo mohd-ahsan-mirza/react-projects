@@ -40,5 +40,5 @@ git remote add origin https://$2:$3@github.com/$2/$1.git
 rm -rf node_modules/gh-pages/.cache
 npm run deploy
 cd ..
-mv $1 react-projects/$1
+mv $1 react-projects/
 exit
