@@ -14,8 +14,8 @@ class Compare extends Component{
         this.resultArray = [];
         this.options = [];
         this.buttonColor = 'btn btn-info';
-        this.options.push({id:"1", option:'Intersection',selected:false,button:<button id='button1' key="1" type='button' className={this.buttonColor} onClick={() => this.intersection()}>Intersection</button>});
-        this.options.push({id:"2", option:'Disjunctive_Union',selected:false,button:<button id='button2' key="2" type='button' className={this.buttonColor} onClick={() => this.disjunctiveUnion()}>Disjunctive Union</button>});
+        this.options.push({id:"1", option:'Intersection',selected:false,button:<button id='button1' key="1" type='button' className={this.buttonColor} onClick={() => this.intersection()}>Common elements</button>});
+        this.options.push({id:"2", option:'Disjunctive_Union',selected:false,button:<button id='button2' key="2" type='button' className={this.buttonColor} onClick={() => this.disjunctiveUnion()}>Uncommon elements</button>});
     }
     intersection(){
         if(this.listOneArray.length<this.listTwoArray.length){
