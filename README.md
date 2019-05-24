@@ -29,6 +29,13 @@ Pass in the parameters as shown above.
 
 After the app has been published, open your package manager and copy paste the url for the homepage of your app into your browser. You should see the boilerplate react provides
 
+## Compare Lists
+This tool helps me get common and uncommon elements between two lists. Very helpful in huge IN clause queries where the number of entries in the IN clause don't match with the number of rows returned.
+
+[URL](https://mohd-ahsan-mirza.github.io/compare-lists/)
+
+[Source Code](https://github.com/mohd-ahsan-mirza/react-projects/tree/master/compare-lists)
+
 ## List Manipulator
 Normally I would have to write large SQL queries at work, and the IN clause normally would have multiple values in it.
 This tool allows me to format any list of IDs I would need in the IN clause by just click of two buttons.
