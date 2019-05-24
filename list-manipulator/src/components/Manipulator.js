@@ -25,6 +25,8 @@ class Manipulator extends Component{
         this.options.push({id:"5", option:")",selected:false,button:<button id='button5' key="5" type='button' className={this.notSelected} onClick={() => this.updateButtonProperties("5")}>)</button>});
         this.options.push({id:"6", option:"),",selected:false,button:<button id='button6' key="6" type='button' className={this.notSelected} onClick={() => this.updateButtonProperties("6")}>),</button>});
         this.options.push({id:"7", option:"00000+",selected:false,button:<button id='button7' key="7" type='button' className={this.notSelected} onClick={() => this.updateButtonProperties("7")}>00000+</button>});
+        this.options.push({id:"8", option:"0000+",selected:false,button:<button id='button8' key="8" type='button' className={this.notSelected} onClick={() => this.updateButtonProperties("8")}>0000+</button>});
+        this.options.push({id:"9", option:"000+",selected:false,button:<button id='button9' key="9" type='button' className={this.notSelected} onClick={() => this.updateButtonProperties("9")}>000+</button>});
         //Add option here
     }
 
@@ -137,11 +139,41 @@ class Manipulator extends Component{
         }
     }
 
+    appendFourZerostoListElements(){
+        var newListString = "";
+        var selectedOption = this.options.filter(selectedOption => selectedOption.id === "8" && selectedOption.selected === true);
+        var newList = [];
+        if(selectedOption.length!==0){
+            for(var run=0;run<this.manipulatedlistArray.length;run++){
+                var value = "0000"+this.manipulatedlistArray[run];
+                newList.push(value);
+                newListString = newListString+value+"\r\n";
+            }
+            this.setManipulatedList(newList,newListString)
+        }
+    }
+
+    appendThreeZerostoListElements(){
+        var newListString = "";
+        var selectedOption = this.options.filter(selectedOption => selectedOption.id === "9" && selectedOption.selected === true);
+        var newList = [];
+        if(selectedOption.length!==0){
+            for(var run=0;run<this.manipulatedlistArray.length;run++){
+                var value = "000"+this.manipulatedlistArray[run];
+                newList.push(value);
+                newListString = newListString+value+"\r\n";
+            }
+            this.setManipulatedList(newList,newListString)
+        }
+    }
+
     //Add option function
 
     manipulateList(){
         this.manipulatedlistArray = this.originalListArray;
         this.appendFiveZerostoListElements();
+        this.appendFourZerostoListElements();
+        this.appendThreeZerostoListElements();
         this.addDoubleQuotesAroundListElements();
         this.addSingleQuotesAroundListElements();
         this.addCommaBetweenListElements();
@@ -232,7 +264,7 @@ class Manipulator extends Component{
         return <form className="row">
                     <div className="form-group col-lg-4 col-md-4 col-sm-12">
                         <h4 className="text-center col-lg-12 col-md-12 col-sm-12">Original List</h4>
-                        <textarea value={this.state.originalList} onChange={(event) => this.updateOriginalList(event)} className="form-control col-lg-12 col-md-12 col-sm-12" rows="20"></textarea>
+                        <textarea value={this.state.originalList} onChange={(event) => this.updateOriginalList(event)} className="form-control col-lg-12 col-md-12 col-sm-12" rows="30"></textarea>
                     </div>
                     <div className="form-group col-lg-4 col-md-4 col-sm-12">
                         <h4 className="text-center col-lg-12 col-md-12 col-sm-12 mb-4">Options</h4>
@@ -242,7 +274,7 @@ class Manipulator extends Component{
                     </div>
                     <div className="form-group col-lg-4 col-md-4 col-sm-12">
                         <h4 className="text-center col-lg-12 col-md-12 col-sm-12">Result</h4>
-                        <textarea value={this.state.manipulatedList} className="form-control col-lg-12 col-md-12 col-sm-12" rows="20" readOnly></textarea>
+                        <textarea value={this.state.manipulatedList} className="form-control col-lg-12 col-md-12 col-sm-12" rows="30" readOnly></textarea>
                     </div>
                 </form>
     }
