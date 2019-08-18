@@ -12,18 +12,16 @@ if [ -z ${2+x} ];
 		echo "Github username is unset";
 		exit 0;
 fi
-if [ -z ${3+x} ]; 
-	then 
-		echo "Github password is unset";
-		exit 0; 
-fi
+read -s -p "GitHub Password: " github_password
 #Check if repo was created on github
-checkRepo=$(git ls-remote https://$2:$3@github.com/$2/$1.git 2>&1)
+checkRepo=$(git ls-remote https://$2:$github_password@github.com/$2/$1.git 2>&1)
 if [[ $checkRepo ==  *"Repository not found"* ]]; 
 	then
+		echo
     	echo "Repo doesn't exist";
     	exit 0;
 else
+	echo
     echo "Repo exist on github";
 fi
 cd ..
@@ -35,7 +33,7 @@ gsed -i '5i\  "homepage": "http://'"$2"'.github.io/'"$1"'",' ./package.json
 gsed -i '15i\    "predeploy": "npm run build",' ./package.json
 gsed -i '16i\    "deploy": "gh-pages -d build",' ./package.json
 git init
-git remote add origin https://$2:$3@github.com/$2/$1.git
+git remote add origin https://$2:$github_password@github.com/$2/$1.git
 #In case the build failed for some reason previously
 rm -rf node_modules/gh-pages/.cache
 npm run deploy
