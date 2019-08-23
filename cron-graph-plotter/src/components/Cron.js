@@ -9,11 +9,36 @@ class Cron extends Graph{
 		var parser = require('cron-parser');
 		
 		var crons = [
-					 {cron_label:"upload", cron_expression: parser.parseExpression('10 15 * * *')},
+					 {cron_label:"upload", cron_expression: parser.parseExpression('19 6 * * *')},
 					 {cron_label: "cancel", cron_expression: parser.parseExpression('20 15 * * *')},
+					 {cron_label: "notification", cron_expression: parser.parseExpression('0 20 * * *')},
 					];
 		
 		var dataSetArray= []
+
+		// To set Y-axis to 60min
+		// var initialDataSetObject = {}
+		// initialDataSetObject.data = []
+		// var initialDataObject = {}
+		// initialDataObject.type = 'line'
+		// initialDataObject.label = 'Max time'
+		// initialDataObject.x = 0
+		// initialDataObject.y = 60
+		// initialDataSetObject.data.push(initialDataObject)
+		// initialDataSetObject.options = {
+		// 	scales: {
+		// 		yAxes: [{
+		// 			type: 'time',
+		// 			time: {
+		// 				unit: 'minute',
+		// 				max:60,
+		// 			},
+		// 			distribution: 'series',
+		// 		}]
+		// 	}
+		// }
+		// dataSetArray.push(initialDataSetObject)
+		
 		for(run=0;run<crons.length;run++){
 			var cron_expression = crons[run].cron_expression
 			var color = this.random_rgba()
@@ -41,7 +66,11 @@ class Cron extends Graph{
 			dataSetObject.pointHitDetectionRadius = 2
 			dataSetObject.data = []
 			var interval = new Date(cron_expression.next())
-			while(this.isToday(interval)){
+			var today = new Date();
+			var tomorrow = new Date();
+			tomorrow.setDate(today.getDate()+1);
+			//By Default graph plotted will be for tomorrow
+			while(this.isEqualDate(tomorrow,interval)){
 				var dataObject = {}
 				dataObject.x = interval.getHours()
 				dataObject.y = interval.getMinutes()
@@ -53,13 +82,13 @@ class Cron extends Graph{
 					yAxes: [{
 						type: 'time',
 						time: {
-							unit: 'minute'
+							unit: 'minute',
+							max:60,
 						},
-						distribution: 'series'
+						distribution: 'series',
 					}]
 				}
 			}
-
 			dataSetArray.push(dataSetObject)
 		}
 
@@ -72,47 +101,6 @@ class Cron extends Graph{
 			chartData:{
 				labels:xAxisValues,
 				datasets: dataSetArray,
-  				/*datasets: [
-    				{
-						type: 'line',
-      					label: 'upload.php',
-      					fill: false,
-      					lineTension: 0.1,
-      					backgroundColor: 'rgba(75,192,192,0.4)',
-      					borderColor: 'rgba(75,192,192,1)',
-      					borderCapStyle: 'butt',
-      					borderDash: [],
-     			 		borderDashOffset: 0.0,
-      					borderJoinStyle: 'miter',
-      					pointBorderColor: 'rgba(75,192,192,1)',
-      					pointBackgroundColor: '#fff',
-      					pointBorderWidth: 10,
-      					pointHoverRadius: 5,
-      					pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-      					pointHoverBorderColor: 'rgba(220,220,220,1)',
-      					pointHoverBorderWidth: 2,
-      					pointRadius: 1,
-      					pointHitRadius: 10,
-						data: [{
-							x: intervalOne.getHours(),
-							y: intervalOne.getMinutes()
-						}, {
-							x: intervalTwo.getHours(),
-							y: intervalTwo.getMinutes()
-						}],
-						options: {
-							scales: {
-								yAxes: [{
-									type: 'time',
-									time: {
-										unit: 'minute'
-									},
-									distribution: 'series'
-								}]
-							}
-						}
-					},
-  				]*/
 			},
 			chartOptions:{
     			scales: {
@@ -125,11 +113,28 @@ class Cron extends Graph{
             			display: true,
         			}]
 				},
-  				options: {
-					
+				tooltips: {
+					callbacks: {
+						title: function(tooltipItem, data) {
+							var dataset = data.datasets[tooltipItem[0].datasetIndex]
+							return dataset.label
+						},
+						label: function(tooltipItem, data) {
+							var dataset = data.datasets[tooltipItem.datasetIndex]
+							var hour=dataset.data[0].x
+							var hour_period = "am"
+							if(hour > 11){
+								hour_period = "pm"
+							}
+							var minute = dataset.data[0].y
+							if (/^\d$/.test(minute))  {
+								minute = "0" + minute
+							  }
+							return hour + ":" + minute + " " + hour_period
+						}
+					}
 				}
 			}
-
 		}
 	}
 	render(){

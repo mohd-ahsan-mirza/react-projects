@@ -65,8 +65,8 @@ class Graph extends Component{
             return this.colorBase.pop();
         }
     }
-    isToday(dateParameter) {
-        var today = new Date();
+    isEqualDate(date,dateParameter) {
+        var today = date;
         return dateParameter.getDate() === today.getDate() && dateParameter.getMonth() === today.getMonth() && dateParameter.getFullYear() === today.getFullYear();
     }
 }
