@@ -6,12 +6,20 @@ class Cron extends Graph{
 	constructor(props){
 		super(props);
 
+		var today = new Date();
+		var date_start = new Date();
+		date_start.setDate(today.getDate()+1);
+
 		var parser = require('cron-parser');
+		var cron_options = {
+			currentDate: date_start,
+		  };
 		
 		var crons = [
-					 {cron_label:"upload", cron_expression: parser.parseExpression('19 6 * * *')},
-					 {cron_label: "cancel", cron_expression: parser.parseExpression('20 15 * * *')},
-					 {cron_label: "notification", cron_expression: parser.parseExpression('0 20 * * *')},
+					 {cron_label:"upload", cron_expression: parser.parseExpression('19 19 * * *',cron_options)},
+					 {cron_label: "cancel", cron_expression: parser.parseExpression('20 19 * * *',cron_options)},
+					 {cron_label: "notification", cron_expression: parser.parseExpression('0 20 * * *',cron_options)},
+					 {cron_label: "process", cron_expression: parser.parseExpression('* * * * *',cron_options)},
 					];
 		
 		var dataSetArray= []
@@ -66,11 +74,9 @@ class Cron extends Graph{
 			dataSetObject.pointHitDetectionRadius = 2
 			dataSetObject.data = []
 			var interval = new Date(cron_expression.next())
-			var today = new Date();
-			var tomorrow = new Date();
-			tomorrow.setDate(today.getDate()+1);
+			console.log(interval)
 			//By Default graph plotted will be for tomorrow
-			while(this.isEqualDate(tomorrow,interval)){
+			while(this.isEqualDate(date_start,interval)){
 				var dataObject = {}
 				dataObject.x = interval.getHours()
 				dataObject.y = interval.getMinutes()
@@ -83,7 +89,6 @@ class Cron extends Graph{
 						type: 'time',
 						time: {
 							unit: 'minute',
-							max:60,
 						},
 						distribution: 'series',
 					}]

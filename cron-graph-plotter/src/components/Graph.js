@@ -66,8 +66,7 @@ class Graph extends Component{
         }
     }
     isEqualDate(date,dateParameter) {
-        var today = date;
-        return dateParameter.getDate() === today.getDate() && dateParameter.getMonth() === today.getMonth() && dateParameter.getFullYear() === today.getFullYear();
+        return dateParameter.getDate() === date.getDate() && dateParameter.getMonth() === date.getMonth() && dateParameter.getFullYear() === date.getFullYear();
     }
 }
 
