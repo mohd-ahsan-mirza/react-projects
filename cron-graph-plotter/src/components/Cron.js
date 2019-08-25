@@ -9,6 +9,7 @@ class Cron extends Graph{
 		var today = new Date();
 		var date_start = new Date();
 		date_start.setDate(today.getDate()+1);
+		date_start.setHours(0,0,0,0);
 
 		var parser = require('cron-parser');
 		var cron_options = {
@@ -16,36 +17,13 @@ class Cron extends Graph{
 		  };
 		
 		var crons = [
-					 {cron_label:"upload", cron_expression: parser.parseExpression('19 19 * * *',cron_options)},
-					 {cron_label: "cancel", cron_expression: parser.parseExpression('20 19 * * *',cron_options)},
-					 {cron_label: "notification", cron_expression: parser.parseExpression('0 20 * * *',cron_options)},
-					 {cron_label: "process", cron_expression: parser.parseExpression('* * * * *',cron_options)},
+					 {cron_label:"upload", cron_expression: parser.parseExpression('19-20 6 * * *',cron_options)},
+					 {cron_label: "cancel", cron_expression: parser.parseExpression('20 7 * * *',cron_options)},
+					 {cron_label: "notification", cron_expression: parser.parseExpression('0 8-9 * * *',cron_options)},
+					 {cron_label: "process", cron_expression: parser.parseExpression('*/10 0 * * *',cron_options)},
 					];
 		
 		var dataSetArray= []
-
-		// To set Y-axis to 60min
-		// var initialDataSetObject = {}
-		// initialDataSetObject.data = []
-		// var initialDataObject = {}
-		// initialDataObject.type = 'line'
-		// initialDataObject.label = 'Max time'
-		// initialDataObject.x = 0
-		// initialDataObject.y = 60
-		// initialDataSetObject.data.push(initialDataObject)
-		// initialDataSetObject.options = {
-		// 	scales: {
-		// 		yAxes: [{
-		// 			type: 'time',
-		// 			time: {
-		// 				unit: 'minute',
-		// 				max:60,
-		// 			},
-		// 			distribution: 'series',
-		// 		}]
-		// 	}
-		// }
-		// dataSetArray.push(initialDataSetObject)
 		
 		for(run=0;run<crons.length;run++){
 			var cron_expression = crons[run].cron_expression
@@ -74,7 +52,7 @@ class Cron extends Graph{
 			dataSetObject.pointHitDetectionRadius = 2
 			dataSetObject.data = []
 			var interval = new Date(cron_expression.next())
-			console.log(interval)
+			//console.log(interval)
 			//By Default graph plotted will be for tomorrow
 			while(this.isEqualDate(date_start,interval)){
 				var dataObject = {}
@@ -111,11 +89,10 @@ class Cron extends Graph{
     			scales: {
         			yAxes: [{
                         display: true,
-                        ticks: {beginAtZero: true}
-                        }
+						},
                     ],
 					xAxes: [{
-            			display: true,
+						display: true,
         			}]
 				},
 				tooltips: {
@@ -125,13 +102,15 @@ class Cron extends Graph{
 							return dataset.label
 						},
 						label: function(tooltipItem, data) {
+							//console.log(tooltipItem)
+							//console.log(data)
 							var dataset = data.datasets[tooltipItem.datasetIndex]
-							var hour=dataset.data[0].x
+							var hour=dataset.data[tooltipItem.index].x
 							var hour_period = "am"
 							if(hour > 11){
 								hour_period = "pm"
 							}
-							var minute = dataset.data[0].y
+							var minute = tooltipItem.value
 							if (/^\d$/.test(minute))  {
 								minute = "0" + minute
 							  }
