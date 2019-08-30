@@ -4,44 +4,6 @@ class Graph extends Component{
     constructor(props){
         super(props);
         this.colorBase = [];
-        this.integratedChartData = [];
-        this.labels = [];
-        this.values = [];
-        this.colors = [];
-
-    }
-    addBaseColors(rgbValue){
-        this.colorBase.push(rgbValue);
-    }
-    addChartData(dataObject){
-        this.integratedChartData.push(dataObject);
-        this.labels.push(dataObject.label);
-        this.values.push(dataObject.data);
-        this.colors.push(dataObject.backgroundColor);
-    }
-    getLabels(){
-        return this.labels;
-    }
-    getValues(){
-        return this.values;
-    }
-    getColors(){
-        return this.colors;
-    }
-    getIntegratedChartData(){
-        return this.integratedChartData;
-    }
-    popIntegratedChartData(){
-        return this.integratedChartData.pop();
-    }
-    popLabels(){
-        return this.labels.pop();
-    }
-    popValues(){
-        return this.values.pop();
-    }
-    popColors(){
-        return this.colors.pop();
     }
     shuffle(a) {
         var j, x, i;
