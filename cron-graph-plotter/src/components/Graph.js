@@ -1,13 +1,13 @@
 import React,{Component} from 'react';
 import {Scatter} from 'react-chartjs-2';
-import {Cron} from './Cron'
 
 class Graph extends Component{
-	constructor(props){
+    constructor(props){
         super(props);
         this.colorBase = [];
-		this.addChartData();
-	}
+        this.intializeChart();
+        this.addInputForm()
+    }
 	shuffle(a) {
 		var j, x, i;
 		for (i = a.length - 1; i > 0; i--) {
@@ -33,7 +33,7 @@ class Graph extends Component{
 	isEqualDate(date,dateParameter) {
         return dateParameter.getDate() === date.getDate() && dateParameter.getMonth() === date.getMonth() && dateParameter.getFullYear() === date.getFullYear();
     }
-	addChartData(){
+	intializeChart(){
 
 		var today = new Date();
 		var date_start = new Date();
@@ -112,6 +112,7 @@ class Graph extends Component{
 
 		}
 		this.state = {
+            formInputs: [],
 			chartData:{
 				labels:xAxisValues,
 				datasets: dataSetArray,
@@ -164,22 +165,23 @@ class Graph extends Component{
 	}
 	handleChange(event) {
 		var cron = event.target.value
-		if(cron.length == 5){
-			//this.addChartData(cron)
-		}
-		
-	};
+	
+    };
+    addInputForm() {
+        console.log(this.state.formInputs)
+        this.state.formInputs.push(<form action="" className="form-inline mt-3">
+                    <div className="form-group w-50">
+                        <input type="text" className="form-control" />
+                    </div>
+                    <div className="form-group w-50">    
+                        <input type="text" className="form-control" />   
+                    </div>
+                </form>)
+    }
 	render(){
 		return(
 			<div className="chart">
-				<form>
-         			<label>Cron</label>
-         			<input
-           				type="text"
-           				maxLength="5"
-           				onChange={this.handleChange}
-         			/>
-       			</form>
+               {this.state.formInputs}
 				<Scatter
 					data={this.state.chartData}
 					width={70}

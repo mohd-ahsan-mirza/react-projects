@@ -7,7 +7,7 @@ class App extends Component {
 
   constructor(props){
   	super(props);
-  	this.header = <div className="row border-bottom"><h1 className="main-header">Cron Plotter - Ahsan Mirza</h1></div>
+  	this.header = <div className="row mt-3"><h1 className="main-header text-center w-100">Cron Plotter - Ahsan Mirza</h1></div>
   	this.initializeComponents();
   }
 
