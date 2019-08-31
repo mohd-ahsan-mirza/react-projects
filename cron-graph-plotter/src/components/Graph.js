@@ -4,6 +4,7 @@ import {Scatter} from 'react-chartjs-2';
 class Graph extends Component{
     constructor(props){
         super(props);
+        this.addInputForm = this.addInputForm.bind(this);
         this.colorBase = [];
         this.intializeChart();
         this.addInputForm()
@@ -180,21 +181,31 @@ class Graph extends Component{
 		var cron = event.target.value
 	
     };
-    addInputForm() {
-        console.log(this.state.formInputs)
-        this.state.formInputs.push(<form action="" className="form-inline mt-3">
+    addInputForm(event) {
+        var formInputArray = this.state.formInputs
+        formInputArray.push(<form action="" className="form-inline mt-3">
                     <div className="form-group w-50">
-                        <input type="text" className="form-control" />
+                        <input type="text" className="form-control" placeholder="Cron Name" />
                     </div>
                     <div className="form-group w-50">    
-                        <input type="text" className="form-control" />   
+                        <input type="text" className="form-control"  placeholder="Cron expression" />   
                     </div>
                 </form>)
+        this.setState({formInputs: formInputArray})
+    }
+    removeInputform(event) {
+
     }
 	render(){
 		return(
 			<div className="chart">
-               {this.state.formInputs}
+               {this.state.formInputs.map(function(formInput){return formInput})}
+               <div className="mt-3 mb-3 text-center">
+                    <button name="addInputForm" className="btn btn-info w-50" onClick={this.addInputForm}>Add Input form</button>
+                </div>
+                <div className="mt-3 mb-3 text-center">
+                    <button name="plotGraph" className="btn btn-success w-50">Plot Graph</button>
+                </div>
 				<Scatter
 					data={this.state.chartData}
 					width={70}
