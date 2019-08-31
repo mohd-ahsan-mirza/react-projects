@@ -29,9 +29,66 @@ class Graph extends Component{
 				this.colorBase = this.shuffle(this.colorBase);
 				return this.colorBase.pop();
 		}
-	}
+    }
+    random_minute() {
+        var minute = Math.floor(Math.random() * 23)
+        return minute
+    }
+    random_hour() {
+        return Math.floor(Math.random() * 20)
+    }
 	isEqualDate(date,dateParameter) {
         return dateParameter.getDate() === date.getDate() && dateParameter.getMonth() === date.getMonth() && dateParameter.getFullYear() === date.getFullYear();
+    }
+    getDataobject(cron_object,date_start){
+        var cron_expression = cron_object.cron_expression
+        var color = this.random_rgba()
+
+   		var dataSetObject = {}
+   		dataSetObject.type = ''
+   		dataSetObject.label = cron_object.cron_label
+   		dataSetObject.fill = false
+   		dataSetObject.lineTension = 0.0
+   		dataSetObject.backgroundColor = color
+   		dataSetObject.borderColor =  color
+   		dataSetObject.borderCapStyle = 'butt'
+   		dataSetObject.borderDash = []
+   		dataSetObject.borderDashOffset = 0.0
+   		dataSetObject.borderJoinStyle = 'miter'
+   		dataSetObject.pointBorderColor = color
+   		dataSetObject.pointBackgroundColor = '#fff'
+   		dataSetObject.pointBorderWidth = 10
+   		dataSetObject.pointHoverRadius = 5
+   		dataSetObject.pointHoverBackgroundColor = color
+   		dataSetObject.pointHoverBorderColor = 'rgba(220,220,220,1)'
+   		dataSetObject.pointHoverBorderWidth = 2
+   		dataSetObject.pointRadius = 1
+   		dataSetObject.pointHitRadius = 10
+   		dataSetObject.pointHitDetectionRadius = 2
+   		dataSetObject.data = []
+   		var interval = new Date(cron_expression.next())
+   		//console.log(interval)
+   		//By Default graph plotted will be for tomorrow
+   		while(this.isEqualDate(date_start,interval)){
+	   		var dataObject = {}
+	   		dataObject.x = interval.getHours()
+	   		dataObject.y = interval.getMinutes()
+	   		dataSetObject.data.push(dataObject)
+	   		interval = new Date(cron_expression.next())
+   		}
+   		dataSetObject.options = {
+	   		scales: {
+		   		yAxes: [{
+			   		type: 'time',
+			   		time: {
+				   		unit: 'minute',
+			   		},
+			   		distribution: 'series',
+		   		}]
+	   		},
+	   		responsive: true,
+        }
+        return dataSetObject;
     }
 	intializeChart(){
 
@@ -53,65 +110,21 @@ class Graph extends Component{
 			xAxisValues.push(run);
 		}
 
-		var crons = [
-			{cron_label:"upload", cron_expression: parser.parseExpression('19-20 6 * * *',cron_options)},
-			{cron_label: "cancel", cron_expression: parser.parseExpression('20 7 * * *',cron_options)},
-			{cron_label: "notification", cron_expression: parser.parseExpression('0 8-9 * * *',cron_options)},
-			{cron_label: "process", cron_expression: parser.parseExpression('* * * * *',cron_options)},
-		];
+        var crons = [];
+        
+        //var demo_index = 1
+        //crons.push({cron_label:"Demo "+demo_index, cron_expression: parser.parseExpression('5-6 * * * *',cron_options)});
+        //crons.push({cron_label: "Demo "+demo_index, cron_expression: parser.parseExpression('20 7 * * *',cron_options)});
+		//crons.push({cron_label: "Demo "+demo_index, cron_expression: parser.parseExpression('10 8-9 * * *',cron_options)});
 
 		for(var run=0;run<crons.length;run++){
-   			var cron_expression = crons[run].cron_expression
-   			var color = this.random_rgba()
-
-   			var dataSetObject = {}
-   			dataSetObject.type = ''
-   			dataSetObject.label = crons[run].cron_label
-   			dataSetObject.fill = false
-   			dataSetObject.lineTension = 0.1
-   			dataSetObject.backgroundColor = color
-   			dataSetObject.borderColor =  color
-   			dataSetObject.borderCapStyle = 'butt'
-   			dataSetObject.borderDash = []
-   			dataSetObject.borderDashOffset = 0.0
-   			dataSetObject.borderJoinStyle = 'miter'
-   			dataSetObject.pointBorderColor = color
-   			dataSetObject.pointBackgroundColor = '#fff'
-   			dataSetObject.pointBorderWidth = 10
-   			dataSetObject.pointHoverRadius = 5
-   			dataSetObject.pointHoverBackgroundColor = color
-   			dataSetObject.pointHoverBorderColor = 'rgba(220,220,220,1)'
-   			dataSetObject.pointHoverBorderWidth = 2
-   			dataSetObject.pointRadius = 1
-   			dataSetObject.pointHitRadius = 10
-   			dataSetObject.pointHitDetectionRadius = 2
-   			dataSetObject.data = []
-   			var interval = new Date(cron_expression.next())
-   			//console.log(interval)
-   			//By Default graph plotted will be for tomorrow
-   			while(this.isEqualDate(date_start,interval)){
-	   		var dataObject = {}
-	   			dataObject.x = interval.getHours()
-	   			dataObject.y = interval.getMinutes()
-	   			dataSetObject.data.push(dataObject)
-	   			interval = new Date(cron_expression.next())
-   			}
-   			dataSetObject.options = {
-	   			scales: {
-		   			yAxes: [{
-			   			type: 'time',
-			   			time: {
-				   			unit: 'minute',
-			   			},
-			   			distribution: 'series',
-		   			}]
-	   			},
-	   			responsive: true,
-   			}
-   			dataSetArray.push(dataSetObject)
+               dataSetArray.push(this.getDataobject(crons[run],date_start))
 
 		}
 		this.state = {
+            date_start: date_start,
+            cron_options: cron_options,
+            crons: crons,
             formInputs: [],
 			chartData:{
 				labels:xAxisValues,
