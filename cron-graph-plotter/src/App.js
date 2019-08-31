@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Cron from './components/Cron';
+import Graph from './components/Graph';
 
 class App extends Component {
 
@@ -13,7 +13,7 @@ class App extends Component {
 
   initializeComponents() {
   	this.components = [];
-		this.components['Cron'] = {renderID:<Cron />}
+		this.components['Graph'] = {renderID:<Graph />}
   }
 
   renderComponent(componentID) {
@@ -31,7 +31,7 @@ class App extends Component {
     return (
       	<div className="container">
 					{this.header}
-					{this.renderComponent('Cron')}
+					{this.renderComponent('Graph')}
 					<footer className="page-footer font-small blue">
   					<div className="footer-copyright text-center py-3">© 2019 Copyright:
     					<a href="http://ahsanmirza.com"> Ahsan mirza</a>
