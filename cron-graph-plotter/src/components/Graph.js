@@ -99,7 +99,7 @@ class Graph extends Component{
 
 		var today = new Date();
 		var date_start = new Date();
-		date_start.setDate(today.getDate()+1);
+		date_start.setDate(today.getDate());
 		date_start.setHours(0,0,0,0);
 
 		var parser = require('cron-parser');
@@ -188,8 +188,12 @@ class Graph extends Component{
     }
     handleDateChange(event){
         var date_start = event
-		date_start.setHours(0,0,0,0);
-        this.setState({date_start:event});
+        date_start.setHours(0,0,0,0);
+        var cron_options = {
+			currentDate: date_start,
+		};
+        this.setState({date_start:date_start});
+        this.setState({cron_options:cron_options});
         this.chartData();
     }
     chartData(){
@@ -201,7 +205,7 @@ class Graph extends Component{
                 try {
                     dataSetArray.push(this.getDataobject({cron_label:this.state.cron_names[run],cron_expression: parser.parseExpression(this.state.cron_expressions[run],this.state.cron_options)},this.state.date_start))
                 }catch(error){
-                    //console.log
+                    //console.log(error)
                 }
             }
         }
