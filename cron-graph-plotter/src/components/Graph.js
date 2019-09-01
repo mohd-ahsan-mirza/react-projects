@@ -187,6 +187,8 @@ class Graph extends Component{
         this.chartData()
     }
     handleDateChange(event){
+        var date_start = event
+		date_start.setHours(0,0,0,0);
         this.setState({date_start:event});
         this.chartData();
     }
