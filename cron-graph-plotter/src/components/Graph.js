@@ -1,13 +1,16 @@
 import React,{Component} from 'react';
 import {Scatter} from 'react-chartjs-2';
+import { throwStatement } from '@babel/types';
 
 class Graph extends Component{
     constructor(props){
         super(props);
         this.addInputForm = this.addInputForm.bind(this);
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleCronExpressionChange = this.handleCronExpressionChange.bind(this);
         this.colorBase = [];
         this.intializeChart();
-        this.addInputForm()
+        this.addInputForm();
     }
 	shuffle(a) {
 		var j, x, i;
@@ -111,22 +114,25 @@ class Graph extends Component{
 			xAxisValues.push(run);
 		}
 
-        var crons = [];
+        //var crons = [];
         
         //var demo_index = 1
         //crons.push({cron_label:"Demo "+demo_index, cron_expression: parser.parseExpression('5-6 * * * *',cron_options)});
         //crons.push({cron_label: "Demo "+demo_index, cron_expression: parser.parseExpression('20 7 * * *',cron_options)});
 		//crons.push({cron_label: "Demo "+demo_index, cron_expression: parser.parseExpression('10 8-9 * * *',cron_options)});
 
-		for(var run=0;run<crons.length;run++){
+		/*for(var run=0;run<crons.length;run++){
                dataSetArray.push(this.getDataobject(crons[run],date_start))
 
-		}
+		}*/
 		this.state = {
             date_start: date_start,
             cron_options: cron_options,
-            crons: crons,
+            //crons: crons,
+            cron_names: [],
+            cron_expressions: [],
             formInputs: [],
+            xAxisValues: xAxisValues,
 			chartData:{
 				labels:xAxisValues,
 				datasets: dataSetArray,
@@ -174,21 +180,46 @@ class Graph extends Component{
 					}
 				}
 			}
-		}
-
+        }
 	}
-	handleChange(event) {
-		var cron = event.target.value
-	
+	handleNameChange(event) {
+        var cron_names = this.state.cron_names;
+        console.log(cron_names)
+        var index = parseInt(event.target.getAttribute('index'));
+        cron_names[index] = event.target.value
+        this.setState({cron_names:cron_names})
     };
+    handleCronExpressionChange(event) {
+        var cron_expressions = this.state.cron_expressions;
+        var index = parseInt(event.target.getAttribute('index'));
+        cron_expressions[index] = event.target.value
+        this.setState({cron_expressions:cron_expressions})
+        this.chartData()
+    }
+    chartData(){
+        this.setState({chartData: {labels:this.state.xAxisValues,datasets:[]}})
+        var parser = require('cron-parser');
+        var dataSetArray = []
+        for(var run=0;run<this.state.cron_expressions.length;run++){
+            dataSetArray.push(this.getDataobject({cron_label:this.state.cron_names[run],cron_expression: parser.parseExpression(this.state.cron_expressions[run],this.state.cron_options)},this.state.date_start))
+        }
+        this.setState({chartData: {labels:this.state.xAxisValues,datasets:dataSetArray}})
+    }
     addInputForm(event) {
         var formInputArray = this.state.formInputs
+        var index = formInputArray.length
+        var cron_name_name = "name_"+index
+        var cron_expression_name = "cron_expression_"+index
+        var cron_names_array = this.state.cron_names.concat("");
+        this.setState({cron_names: cron_names_array});
+        var cron_expression_array = this.state.cron_expressions.concat("")
+        this.setState({cron_expressions: cron_expression_array})
         formInputArray.push(<form action="" className="form-inline mt-3">
                     <div className="form-group w-50">
-                        <input type="text" className="form-control" placeholder="Cron Name" />
+                        <input defaultValue="" index={index} name={cron_name_name} onChange={this.handleNameChange} type="text" className="form-control" placeholder="Cron Name" />
                     </div>
                     <div className="form-group w-50">    
-                        <input type="text" className="form-control"  placeholder="Cron expression" />   
+                        <input index={index} name={cron_expression_name} onChange={this.handleCronExpressionChange} type="text" className="form-control"  placeholder="Cron expression" />   
                     </div>
                 </form>)
         this.setState({formInputs: formInputArray})
