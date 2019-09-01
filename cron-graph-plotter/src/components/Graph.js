@@ -184,10 +184,10 @@ class Graph extends Component{
 	}
 	handleNameChange(event) {
         var cron_names = this.state.cron_names;
-        console.log(cron_names)
         var index = parseInt(event.target.getAttribute('index'));
         cron_names[index] = event.target.value
         this.setState({cron_names:cron_names})
+        this.chartData()
     };
     handleCronExpressionChange(event) {
         var cron_expressions = this.state.cron_expressions;
@@ -201,7 +201,13 @@ class Graph extends Component{
         var parser = require('cron-parser');
         var dataSetArray = []
         for(var run=0;run<this.state.cron_expressions.length;run++){
-            dataSetArray.push(this.getDataobject({cron_label:this.state.cron_names[run],cron_expression: parser.parseExpression(this.state.cron_expressions[run],this.state.cron_options)},this.state.date_start))
+            if(typeof this.state.cron_names[run] !== "undefined" && this.state.cron_names[run].length !=0 && this.state.cron_expressions[run] !== "undefined" && this.state.cron_expressions[run].length >= 9){
+                try {
+                    dataSetArray.push(this.getDataobject({cron_label:this.state.cron_names[run],cron_expression: parser.parseExpression(this.state.cron_expressions[run],this.state.cron_options)},this.state.date_start))
+                }catch(error){
+                    //console.log
+                }
+            }
         }
         this.setState({chartData: {labels:this.state.xAxisValues,datasets:dataSetArray}})
     }
@@ -219,7 +225,7 @@ class Graph extends Component{
                         <input defaultValue="" index={index} name={cron_name_name} onChange={this.handleNameChange} type="text" className="form-control" placeholder="Cron Name" />
                     </div>
                     <div className="form-group w-50">    
-                        <input index={index} name={cron_expression_name} onChange={this.handleCronExpressionChange} type="text" className="form-control"  placeholder="Cron expression" />   
+                        <input index={index} name={cron_expression_name} onChange={this.handleCronExpressionChange} type="text" className="form-control"  placeholder="Cron expression" />
                     </div>
                 </form>)
         this.setState({formInputs: formInputArray})
