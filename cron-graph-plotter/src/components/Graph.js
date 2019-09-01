@@ -1,12 +1,13 @@
 import React,{Component} from 'react';
 import {Scatter} from 'react-chartjs-2';
-import { throwStatement } from '@babel/types';
-
+import DatePicker from "react-datepicker";
 class Graph extends Component{
     constructor(props){
         super(props);
         this.addInputForm = this.addInputForm.bind(this);
+        this.removeInputform = this.removeInputform.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleDateChange = this.handleDateChange.bind(this);
         this.handleCronExpressionChange = this.handleCronExpressionChange.bind(this);
         this.colorBase = [];
         this.intializeChart();
@@ -114,17 +115,6 @@ class Graph extends Component{
 			xAxisValues.push(run);
 		}
 
-        //var crons = [];
-        
-        //var demo_index = 1
-        //crons.push({cron_label:"Demo "+demo_index, cron_expression: parser.parseExpression('5-6 * * * *',cron_options)});
-        //crons.push({cron_label: "Demo "+demo_index, cron_expression: parser.parseExpression('20 7 * * *',cron_options)});
-		//crons.push({cron_label: "Demo "+demo_index, cron_expression: parser.parseExpression('10 8-9 * * *',cron_options)});
-
-		/*for(var run=0;run<crons.length;run++){
-               dataSetArray.push(this.getDataobject(crons[run],date_start))
-
-		}*/
 		this.state = {
             date_start: date_start,
             cron_options: cron_options,
@@ -196,6 +186,10 @@ class Graph extends Component{
         this.setState({cron_expressions:cron_expressions})
         this.chartData()
     }
+    handleDateChange(event){
+        this.setState({date_start:event});
+        this.chartData();
+    }
     chartData(){
         this.setState({chartData: {labels:this.state.xAxisValues,datasets:[]}})
         var parser = require('cron-parser');
@@ -221,27 +215,49 @@ class Graph extends Component{
         var cron_expression_array = this.state.cron_expressions.concat("")
         this.setState({cron_expressions: cron_expression_array})
         formInputArray.push(<form action="" className="form-inline mt-3">
-                    <div className="form-group w-50">
+                    <div className="w-25"></div>
+                    <div className="form-group w-25 mr-5">
                         <input defaultValue="" index={index} name={cron_name_name} onChange={this.handleNameChange} type="text" className="form-control" placeholder="Cron Name" />
                     </div>
-                    <div className="form-group w-50">    
+                    <div className="form-group w-25">
                         <input index={index} name={cron_expression_name} onChange={this.handleCronExpressionChange} type="text" className="form-control"  placeholder="Cron expression" />
                     </div>
+                    <div className="w-25"></div>
                 </form>)
         this.setState({formInputs: formInputArray})
     }
     removeInputform(event) {
-
+        var formInputs =  this.state.formInputs;
+        if(formInputs.length > 1){
+            formInputs.pop()
+            var cron_names = this.state.cron_names;
+            cron_names.pop();
+            var cron_expressions = this.state.cron_expressions;
+            cron_expressions.pop();
+            this.setState({cron_names:cron_names})
+            this.setState({cron_expressions:cron_expressions});
+            this.setState({formInputs: formInputs});
+            this.chartData()
+        }
     }
 	render(){
 		return(
 			<div className="chart">
+                <div className="w-100 mt-3 mb-3 text-center">
+                    <div className="ml-10">
+                        <span className="mr-3">Date Picker:</span>
+                        <DatePicker 
+                            selected={this.state.date_start}
+                            onChange={this.handleDateChange}
+                        />
+                    </div>
+                </div>
                {this.state.formInputs.map(function(formInput){return formInput})}
                <div className="mt-3 mb-3 text-center">
                     <button name="addInputForm" className="btn btn-info w-50" onClick={this.addInputForm}>Add Input form</button>
                 </div>
                 <div className="mt-3 mb-3 text-center">
-                    <button name="plotGraph" className="btn btn-success w-50">Plot Graph</button>
+                    <button name="removeInputForm" className="btn btn-danger w-50" onClick={this.removeInputform}>Remove Input form</button>
                 </div>
 				<Scatter
 					data={this.state.chartData}
