@@ -233,14 +233,12 @@ class Graph extends Component{
         var cron_expression_array = this.state.cron_expressions.concat("")
         this.setState({cron_expressions: cron_expression_array})
         formInputArray.push(<form action="" className="form-inline mt-3">
-                    <div className="w-25"></div>
-                    <div className="form-group w-25 mr-5">
-                        <input defaultValue="" index={index} name={cron_name_name} onChange={this.handleNameChange} type="text" className="form-control" placeholder="Cron Name" />
+                    <div className="form-group w-50">
+                        <input defaultValue="" index={index} name={cron_name_name} onChange={this.handleNameChange} type="text" className="form-control w-50" placeholder="Cron Name" />
                     </div>
-                    <div className="form-group w-25">
-                        <input index={index} name={cron_expression_name} onChange={this.handleCronExpressionChange} type="text" className="form-control"  placeholder="Cron expression" />
+                    <div className="form-group w-50" style={{display:"inline-block"}}>
+                        <input index={index} style={{float:"right"}} name={cron_expression_name} onChange={this.handleCronExpressionChange} type="text" className="form-control w-50"  placeholder="Cron expression" />
                     </div>
-                    <div className="w-25"></div>
                 </form>)
         this.setState({formInputs: formInputArray})
     }
@@ -263,8 +261,9 @@ class Graph extends Component{
 			<div className="chart">
                 <div className="w-100 mt-3 mb-3 text-center">
                     <div className="ml-10">
-                        <span className="mr-3">Date Picker:</span>
-                        <DatePicker 
+                        <span className="mr-3 font-weight-bold" style={{fontSize:"20px"}}>Date Picker:</span>
+                        <DatePicker
+                            className="form-control"
                             selected={this.state.date_start}
                             onChange={this.handleDateChange}
                         />
