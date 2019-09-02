@@ -23,9 +23,10 @@ You will also need git running on your commandline
 ```
 $1 = Repo name
 $2 = Github username
-$3 = Github password
 ```
 Pass in the parameters as shown above.
+
+You will be prompted to enter your github account password
 
 After the app has been published, open your package manager and copy paste the url for the homepage of your app into your browser. You should see the boilerplate react provides
 
