@@ -9,6 +9,8 @@ class Graph extends Component{
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
         this.handleCronExpressionChange = this.handleCronExpressionChange.bind(this);
+        this.date_start = new Date();
+        this.cron_options = [];
         this.colorBase = [];
         this.intializeChart();
         this.addInputForm();
@@ -43,6 +45,10 @@ class Graph extends Component{
         return Math.floor(Math.random() * 20)
     }
 	isEqualDate(date,dateParameter) {
+        // console.log("------")
+        // console.log(date)
+        // console.log(dateParameter)
+        // console.log("------")
         return dateParameter.getDate() === date.getDate() && dateParameter.getMonth() === date.getMonth() && dateParameter.getFullYear() === date.getFullYear();
     }
     getDataobject(cron_object,date_start){
@@ -115,10 +121,11 @@ class Graph extends Component{
 			xAxisValues.push(run);
 		}
 
+        this.date_start = date_start;
+        this.cron_options = cron_options;
 		this.state = {
             date_start: date_start,
             cron_options: cron_options,
-            //crons: crons,
             cron_names: [],
             cron_expressions: [],
             formInputs: [],
@@ -189,9 +196,14 @@ class Graph extends Component{
     handleDateChange(event){
         var date_start = event
         date_start.setHours(0,0,0,0);
+        // console.log("--")
+        // console.log(date_start)
+        // console.log("--")
         var cron_options = {
 			currentDate: date_start,
-		};
+        };
+        this.date_start = date_start;
+        this.cron_options = cron_options;
         this.setState({date_start:date_start});
         this.setState({cron_options:cron_options});
         this.chartData();
@@ -203,7 +215,7 @@ class Graph extends Component{
         for(var run=0;run<this.state.cron_expressions.length;run++){
             if(typeof this.state.cron_names[run] !== "undefined" && this.state.cron_names[run].length !=0 && this.state.cron_expressions[run] !== "undefined" && this.state.cron_expressions[run].length >= 9){
                 try {
-                    dataSetArray.push(this.getDataobject({cron_label:this.state.cron_names[run],cron_expression: parser.parseExpression(this.state.cron_expressions[run],this.state.cron_options)},this.state.date_start))
+                    dataSetArray.push(this.getDataobject({cron_label:this.state.cron_names[run],cron_expression: parser.parseExpression(this.state.cron_expressions[run],this.cron_options)},this.date_start))
                 }catch(error){
                     //console.log(error)
                 }
@@ -268,7 +280,7 @@ class Graph extends Component{
 				<Scatter
 					data={this.state.chartData}
 					width={70}
-  					height={30}
+                    height={30}
 					options={this.state.chartOptions}
 				/>
 			</div>
